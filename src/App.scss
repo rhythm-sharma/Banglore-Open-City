@@ -1,0 +1,56 @@
+.end-line {
+  color: #292961;
+  border: 1px solid;
+  width: 120px;
+}
+
+.main-container {
+  header {
+    .navbar {
+      background-color: #292961 !important;
+      a {
+        .heading {
+          color: #fff !important;
+          font-size: 1.5rem;
+        }
+        .sub-text {
+          color: #cccef0 !important;
+        }
+      }
+    }
+  }
+}
+
+.body-container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.what-we-do-section {
+  .card {
+    width: 75%;
+    margin: auto;
+    margin-top: -40px;
+    .card-body {
+      .sub-text {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+/* On screens that are 768px or less */
+@media screen and (max-width: 768px) {
+  .what-we-do-section {
+    .card {
+      width: 85%;
+      margin: auto;
+      margin-top: 20px;
+      .card-body {
+        .sub-text {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

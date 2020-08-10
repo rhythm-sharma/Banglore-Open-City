@@ -1,0 +1,38 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  position: absolute;
+  border: #292961 solid 15px;
+  height: 125px;
+  width: 125px;
+  border-radius: 120px;
+}
+
+.right {
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(-45deg);
+}
+
+.left {
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  transform: rotate(315deg);
+}
+
+.middle {
+  color: #000000;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  height: 130px;
+}
+
+@media screen and (max-width: 996px) {
+  .facts-container {
+    flex-direction: column !important;
+  }
+}
