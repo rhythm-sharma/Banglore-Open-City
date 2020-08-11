@@ -43,6 +43,7 @@
   padding: 10px;
   float: left;
   position: absolute;
+  cursor: move;
 }
 
 .hide-popup {
@@ -51,4 +52,10 @@
 
 .react-draggable {
   // transform: none !important;
+}
+
+svg {
+  path {
+    cursor: pointer;
+  }
 }

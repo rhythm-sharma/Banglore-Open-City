@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import Draggable from "react-draggable";
 
 import "./Map.scss";
 
@@ -18,6 +17,9 @@ class Map extends Component {
 
   componentDidMount() {
     this.createMap();
+
+    // Adding drag popover element into the DOM
+    this.dragElement(document.getElementById("dragWrapper"));
   }
 
   componentDidUpdate(prevProps) {
@@ -100,7 +102,12 @@ class Map extends Component {
             const mouse = d3.mouse(svg.node()).map(function (d) {
               return parseInt(d);
             });
-            that.handleDraggablePopOver(d.properties, mouse[0], mouse[1]);
+            that.handleDraggablePopOver(
+              d.properties,
+              mouse[0],
+              mouse[1],
+              "School"
+            );
           });
         } else if (length === 4) {
           // only works for bus stop data
@@ -128,7 +135,12 @@ class Map extends Component {
             const mouse = d3.mouse(svg.node()).map(function (d) {
               return parseInt(d);
             });
-            that.handleDraggablePopOver(d.properties, mouse[0], mouse[1]);
+            that.handleDraggablePopOver(
+              d.properties,
+              mouse[0],
+              mouse[1],
+              "Bus Stop"
+            );
           });
         } else if (length === 11) {
           // only works for routes data
@@ -177,8 +189,12 @@ class Map extends Component {
     el.remove();
   };
 
-  handleDraggablePopOver = (properties, x, y) => {
-    console.log("handleDraggablePopOver");
+  handleDraggablePopOver = (properties, x, y, title) => {
+    const dragElement = document.getElementById("dragWrapper");
+    const dragTitleElement = document.getElementById("dragWrapperTitle");
+    dragElement.style.left = x + "px";
+    dragElement.style.top = y + "px";
+    dragTitleElement.innerHTML = title;
     this.setState({
       showDraggablePopUp: true,
       textDraggablePopUp: properties,
@@ -189,50 +205,103 @@ class Map extends Component {
     });
   };
 
+  dragElement = (elmnt) => {
+    var pos1 = 0,
+      pos2 = 0,
+      pos3 = 0,
+      pos4 = 0;
+    if (document.getElementById(elmnt.id + "header")) {
+      /* if present, the header is where you move the DIV from:*/
+      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    } else {
+      /* otherwise, move the DIV from anywhere inside the DIV:*/
+      elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+      elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+    }
+
+    function closeDragElement() {
+      /* stop moving when mouse button is released:*/
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  };
+
+  handleDraggablePopOverClose = () => {
+    this.setState({
+      showDraggablePopUp: false,
+    });
+  };
+
   render() {
-    const {
-      showDraggablePopUp,
-      textDraggablePopUp,
-      positionDraggablePopUp,
-    } = this.state;
+    const { showDraggablePopUp, textDraggablePopUp } = this.state;
 
     let draggableContainer =
       textDraggablePopUp &&
       Object.keys(textDraggablePopUp).map((key) => {
         if (typeof textDraggablePopUp[key] !== "object") {
           return (
-            <tr>
+            <tr className="quicksand">
               <td>{key}</td>
               <td>{textDraggablePopUp[key]}</td>
             </tr>
           );
         } else {
-          return <tr></tr>;
+          return null;
         }
       });
-
-    console.log("textDraggablePopUp: ", textDraggablePopUp);
 
     return (
       <div className="position-relative">
         <div className="map-wrapper" ref={this.mapWrapper}></div>
         <div ref={this.tooltip}></div>
         <div
-          style={{
-            left: positionDraggablePopUp.x,
-            top: positionDraggablePopUp.y,
-          }}
-          className={!showDraggablePopUp && "hide-popup"}
+          id="dragWrapper"
+          className={
+            "position-absolute " + (!showDraggablePopUp && "hide-popup")
+          }
         >
-          <Draggable>
-            <div className="box">{JSON.stringify(textDraggablePopUp)}</div>
-            {/* <div className="box">
-              
-              <table className="table table-striped">
-                <tbody>{draggableContainer}</tbody>
-              </table>
-            </div> */}
-          </Draggable>
+          <div className="box">
+            <div className="modal-header p-0 pb-2">
+              <h6 id="dragWrapperTitle" className="modal-title">
+                {""}
+              </h6>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onClick={this.handleDraggablePopOverClose}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <table className="table table-striped">
+              <tbody>{draggableContainer}</tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
