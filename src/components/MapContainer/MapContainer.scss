@@ -1,0 +1,17 @@
+.map-data-checkbox-container {
+  width: 80%;
+  margin: auto;
+  .form-check {
+    margin: 1rem 0rem 1rem 1rem;
+  }
+}
+
+/* On screens that are 768px or less */
+@media screen and (max-width: 768px) {
+  .map-data-checkbox-container {
+    flex-direction: column !important;
+    .form-check {
+      margin: 1rem 0rem 1rem 0rem;
+    }
+  }
+}

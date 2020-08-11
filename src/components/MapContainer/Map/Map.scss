@@ -25,6 +25,7 @@
 }
 
 .tooltip-wrapper {
+  position: absolute;
   color: #222;
   background-color: #cccef0;
   padding: 0.5em;
@@ -32,5 +33,22 @@
   border-radius: 2px;
   border: 1px solid #292961;
   opacity: 0.9;
+}
+
+.box {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin: 10px;
+  padding: 10px;
+  float: left;
   position: absolute;
+}
+
+.hide-popup {
+  display: none;
+}
+
+.react-draggable {
+  // transform: none !important;
 }

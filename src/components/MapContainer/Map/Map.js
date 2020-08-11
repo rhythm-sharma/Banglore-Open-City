@@ -1,29 +1,38 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-
-import geojsonMerge from "@mapbox/geojson-merge";
+import Draggable from "react-draggable";
 
 import "./Map.scss";
 
 class Map extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showDraggablePopUp: false,
+      textDraggablePopUp: null,
+      positionDraggablePopUp: { x: 0, y: 0 },
+    };
     this.mapWrapper = React.createRef();
     this.tooltip = React.createRef();
   }
 
   componentDidMount() {
-    const { bangaloreBoundaries, busStops, routes, schools } = this.props;
+    this.createMap();
+  }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.mergedGeoJSON !== this.props.mergedGeoJSON) {
+      this.removeMap();
+      this.createMap();
+    }
+  }
+
+  createMap = () => {
+    const that = this;
     const mapWrapper = this.mapWrapper.current;
     const tooltipWrapper = this.tooltip.current;
 
-    const mergedGeoJSON = geojsonMerge.merge([
-      routes,
-      // bangaloreBoundaries,
-      busStops,
-      schools,
-    ]);
+    const mergedGeoJSON = this.props.mergedGeoJSON;
 
     const { width, height } = mapWrapper.getBoundingClientRect();
 
@@ -31,6 +40,7 @@ class Map extends Component {
       .select(mapWrapper)
       .append("svg")
       .attr("class", "map")
+      .attr("id", "map")
       .attr("width", width)
       .attr("height", height);
 
@@ -79,11 +89,18 @@ class Map extends Component {
                 "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
               )
               .html(function () {
-                return `<div> <strong>School </strong> ${d.properties.name} </div>`;
+                return `<div>${d.properties.name}  <strong>School </strong> </div>`;
               });
           });
           d3.select(this).on("mouseout", function (d) {
             tooltip.classed("hidden", true);
+          });
+
+          d3.select(this).on("click", function (d) {
+            const mouse = d3.mouse(svg.node()).map(function (d) {
+              return parseInt(d);
+            });
+            that.handleDraggablePopOver(d.properties, mouse[0], mouse[1]);
           });
         } else if (length === 4) {
           // only works for bus stop data
@@ -100,11 +117,18 @@ class Map extends Component {
                 "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
               )
               .html(function () {
-                return `<div> <strong>Bus Stop </strong> ${d.properties.name} </div>`;
+                return `<div> ${d.properties.name} <strong>Bus Stop </strong></div>`;
               });
           });
           d3.select(this).on("mouseout", function (d) {
             tooltip.classed("hidden", true);
+          });
+
+          d3.select(this).on("click", function (d) {
+            const mouse = d3.mouse(svg.node()).map(function (d) {
+              return parseInt(d);
+            });
+            that.handleDraggablePopOver(d.properties, mouse[0], mouse[1]);
           });
         } else if (length === 11) {
           // only works for routes data
@@ -120,7 +144,9 @@ class Map extends Component {
                 "style",
                 "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
               )
-              .html(d.properties.origin);
+              .html(function () {
+                return `<div> ${d.properties.origin} <strong>Route </strong></div>`;
+              });
           });
           d3.select(this).on("mouseout", function (d) {
             tooltip.classed("hidden", true);
@@ -144,17 +170,70 @@ class Map extends Component {
         .translate(-197905.53913436, 203642.97999083705)
         .scale(118270.34915599221)
     );
-  }
+  };
 
-  shouldComponentUpdate() {
-    return false;
-  }
+  removeMap = () => {
+    const el = document.getElementById("map");
+    el.remove();
+  };
+
+  handleDraggablePopOver = (properties, x, y) => {
+    console.log("handleDraggablePopOver");
+    this.setState({
+      showDraggablePopUp: true,
+      textDraggablePopUp: properties,
+      positionDraggablePopUp: {
+        x: x,
+        y: y,
+      },
+    });
+  };
 
   render() {
+    const {
+      showDraggablePopUp,
+      textDraggablePopUp,
+      positionDraggablePopUp,
+    } = this.state;
+
+    let draggableContainer =
+      textDraggablePopUp &&
+      Object.keys(textDraggablePopUp).map((key) => {
+        if (typeof textDraggablePopUp[key] !== "object") {
+          return (
+            <tr>
+              <td>{key}</td>
+              <td>{textDraggablePopUp[key]}</td>
+            </tr>
+          );
+        } else {
+          return <tr></tr>;
+        }
+      });
+
+    console.log("textDraggablePopUp: ", textDraggablePopUp);
+
     return (
       <div className="position-relative">
         <div className="map-wrapper" ref={this.mapWrapper}></div>
         <div ref={this.tooltip}></div>
+        <div
+          style={{
+            left: positionDraggablePopUp.x,
+            top: positionDraggablePopUp.y,
+          }}
+          className={!showDraggablePopUp && "hide-popup"}
+        >
+          <Draggable>
+            <div className="box">{JSON.stringify(textDraggablePopUp)}</div>
+            {/* <div className="box">
+              
+              <table className="table table-striped">
+                <tbody>{draggableContainer}</tbody>
+              </table>
+            </div> */}
+          </Draggable>
+        </div>
       </div>
     );
   }

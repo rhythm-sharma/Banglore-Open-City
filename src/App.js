@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Map from "./components/Map/Map";
+import MapContainer from "./components/MapContainer/MapContainer";
 import Facts from "./components/Facts/Facts";
 import DataTable from "./components/Table/Table";
 
@@ -58,8 +58,8 @@ class App extends Component {
           <section className="bangalore-map py-5">
             <h2 className="text-center exo">Bangalore Schools Map</h2>
             <hr className="end-line" />
-            <div className="map-container mt-5">
-              <Map
+            <div className="mt-5">
+              <MapContainer
                 bangaloreBoundaries={bangaloreBoundaries}
                 busStops={busStops}
                 routes={routes}
