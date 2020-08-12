@@ -20,6 +20,23 @@
   stroke-width: 0.5 !important;
 }
 
+.map-routes {
+  &:hover {
+    fill: #000 !important;
+    fill-opacity: 0.1 !important;
+  }
+}
+
+.highlight-marker {
+  stroke: red !important;
+  stroke-width: 1.5 !important;
+}
+
+.highlight-route {
+  fill: #000 !important;
+  fill-opacity: 0.1;
+}
+
 .hidden {
   display: none;
 }
@@ -44,6 +61,7 @@
   float: left;
   position: absolute;
   cursor: move;
+  z-index: 999;
 }
 
 .hide-popup {
