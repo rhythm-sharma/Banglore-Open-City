@@ -1,10 +1,5 @@
-.map {
-  border: 1px solid black;
-}
-
 .map-wrapper {
-  height: 400px;
-  width: 80%;
+  height: 700px;
   margin: auto;
 }
 
@@ -21,20 +16,29 @@
 }
 
 .map-routes {
+  stroke-linejoin: round !important;
+  stroke-linecap: round !important;
+  fill-rule: evenodd !important;
+  stroke: rgb(64, 120, 192) !important;
+  stroke-opacity: 1.5 !important;
+  stroke-width: 3.5 !important;
+  fill: rgb(219, 231, 247) !important;
+  fill-opacity: 1 !important;
   &:hover {
-    fill: #000 !important;
-    fill-opacity: 0.1 !important;
+    fill: rgb(151, 188, 238) !important;
+    fill-opacity: 1 !important;
   }
 }
 
 .highlight-marker {
-  stroke: red !important;
+  fill: red !important;
+  stroke: black !important;
   stroke-width: 1.5 !important;
 }
 
 .highlight-route {
-  fill: #000 !important;
-  fill-opacity: 0.1;
+  fill: rgb(151, 188, 238) !important;
+  fill-opacity: 1 !important;
 }
 
 .hidden {
@@ -44,9 +48,8 @@
 .tooltip-wrapper {
   position: absolute;
   color: #222;
-  background-color: #cccef0;
+  background-color: rgb(255, 255, 255);
   padding: 0.5em;
-  text-shadow: #f5f5f5 0 1px 0;
   border-radius: 2px;
   border: 1px solid #292961;
   opacity: 0.9;
@@ -68,12 +71,22 @@
   display: none;
 }
 
-.react-draggable {
-  // transform: none !important;
-}
-
 svg {
   path {
     cursor: pointer;
   }
+}
+
+.more-info {
+  padding: 0px;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: end;
+  margin-bottom: 0px;
+  margin-top: 0.5rem;
+  color: #0049f1;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

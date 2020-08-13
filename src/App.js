@@ -44,15 +44,24 @@ class App extends Component {
             </div>
           </section>
 
-          <section className="bangalore-facts py-5">
-            <h2 className="text-center exo">Bangalore School Facts</h2>
+          <section className="what-are-we-working py-5">
+            <h2 className="text-center exo">What we are working on</h2>
             <hr className="end-line" />
-            <Facts
-              bangaloreBoundaries={bangaloreBoundaries}
-              busStops={busStops}
-              routes={routes}
-              schools={schools}
-            />
+            <p className="exo m-auto mt-3 text-center sub-text">
+              Open City works with a goal to use data, tech and design to helps
+              citizens and civil society by bringing visibility and transparency
+              into local governance and enabling data-driven decision making.
+              The data visualized through the online platform will help identify
+              where the gaps and information needs are, serve as evidence when
+              advocating for connectivity and help government to optimize their
+              connectivity between education organizations and transport system.
+            </p>
+          </section>
+
+          <section className="bangalore-facts py-5">
+            <h2 className="text-center exo">Bangalore Facts</h2>
+            <hr className="end-line" />
+            <Facts busStops={busStops} schools={schools} />
           </section>
 
           <section className="bangalore-map py-5">
@@ -60,7 +69,6 @@ class App extends Component {
             <hr className="end-line" />
             <div className="mt-5">
               <MapContainer
-                bangaloreBoundaries={bangaloreBoundaries}
                 busStops={busStops}
                 routes={routes}
                 schools={schools}

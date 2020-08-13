@@ -12,7 +12,7 @@ class Facts extends Component {
           value: "",
         },
         {
-          title: "Bus stands near school",
+          title: "Bus stops",
           value: "",
         },
         {

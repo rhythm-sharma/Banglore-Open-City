@@ -1,15 +1,52 @@
 .map-data-checkbox-container {
-  width: 80%;
-  margin: auto;
   .form-check {
-    margin: 1rem 0rem 1rem 1rem;
+    margin: 0rem 0rem 0rem 1rem;
   }
+}
+
+.map-container {
+  width: 95%;
+  margin: auto;
+  .sub-text {
+    font-size: 1.2rem;
+  }
+  .map-card {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    .map-header {
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0;
+      background-color: #f5f6fb;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 8px 8px 0px 0px;
+    }
+  }
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.yellow {
+  background-color: #ffd800;
+}
+
+.violet {
+  background-color: #292961;
 }
 
 /* On screens that are 768px or less */
 @media screen and (max-width: 768px) {
   .map-data-checkbox-container {
     flex-direction: column !important;
+    .map-checkbox-options {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
     .form-check {
       margin: 1rem 0rem 1rem 0rem;
     }

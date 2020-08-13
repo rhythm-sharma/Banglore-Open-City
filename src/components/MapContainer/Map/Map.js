@@ -49,8 +49,8 @@ class Map extends Component {
       .append("svg")
       .attr("class", "map")
       .attr("id", "map")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", "100%")
+      .attr("height", "100%");
 
     const tooltip = d3
       .select(tooltipWrapper)
@@ -89,135 +89,8 @@ class Map extends Component {
           d3.select(this).attr("class", "map-routes");
         }
 
+        // Setting up map data into data attribute of path element
         d3.select(this).attr("data-data", JSON.stringify(d));
-
-        // d3.select(this).on("mouseover", function (d) {
-        //   if (length === 11) {
-        //     d3.select(this).style("fill", "#000").style("fill-opacity", 0.1);
-        //   }
-
-        //   const mouse = d3.mouse(svg.node()).map(function (d) {
-        //     return parseInt(d);
-        //   });
-        //   tooltip
-        //     .classed("hidden", false)
-        //     .attr(
-        //       "style",
-        //       "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
-        //     )
-        //     .html(function () {
-        //       if (length === 5) {
-        //         return `<div>${d.properties.name}  <strong> ,School</strong> </div>`;
-        //       } else if (length === 4) {
-        //         return `<div>${d.properties.name}  <strong> ,Bus Stop</strong> </div>`;
-        //       } else if (length === 11) {
-        //         return `<div>${d.properties.name}  <strong> ,Route</strong> </div>`;
-        //       }
-        //     });
-        // });
-
-        // d3.select(this).on("click", function (d) {
-        //   const mouse = d3.mouse(svg.node()).map(function (d) {
-        //     return parseInt(d);
-        //   });
-        //   that.handleDraggablePopOver(
-        //     d.properties,
-        //     mouse[0],
-        //     mouse[1],
-        //     "School"
-        //   );
-        // });
-
-        // d3.select(this).on("mouseout", function (d) {
-        //   if (length === 11) {
-        //     d3.selectAll("path").style("fill", "#fff").style("fill-opacity", 1);
-        //   }
-        //   tooltip.classed("hidden", true);
-        // });
-
-        // if (length === 5) {
-        //   // only works for school data
-        //   d3.select(this).attr("class", "map-school");
-
-        //   d3.select(this).on("click", function (d) {
-        //     const mouse = d3.mouse(svg.node()).map(function (d) {
-        //       return parseInt(d);
-        //     });
-        //     that.handleDraggablePopOver(
-        //       d.properties,
-        //       mouse[0],
-        //       mouse[1],
-        //       "School"
-        //     );
-        //   });
-        // } else if (length === 4) {
-        //   // only works for bus stop data
-        //   d3.select(this).attr("class", "map-bus-stops");
-        //   d3.select(this).on("mouseover", function (d) {
-        //     const mouse = d3.mouse(svg.node()).map(function (d) {
-        //       return parseInt(d);
-        //     });
-
-        //     tooltip
-        //       .classed("hidden", false)
-        //       .attr(
-        //         "style",
-        //         "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
-        //       )
-        //       .html(function () {
-        //         return `<div> ${d.properties.name} <strong>Bus Stop </strong></div>`;
-        //       });
-        //   });
-        //   d3.select(this).on("mouseout", function (d) {
-        //     tooltip.classed("hidden", true);
-        //   });
-
-        // d3.select(this).on("click", function (d) {
-        //   const mouse = d3.mouse(svg.node()).map(function (d) {
-        //     return parseInt(d);
-        //   });
-        //   that.handleDraggablePopOver(
-        //     d.properties,
-        //     mouse[0],
-        //     mouse[1],
-        //     "Bus Stop"
-        //   );
-        // });
-        // } else if (length === 11) {
-        //   // only works for routes data
-        //   d3.select(this).on("mouseover", function (d) {
-        //     d3.select(this).style("fill", "#000").style("fill-opacity", 0.1);
-
-        //     const mouse = d3.mouse(svg.node()).map(function (d) {
-        //       return parseInt(d);
-        //     });
-        //     tooltip
-        //       .classed("hidden", false)
-        //       .attr(
-        //         "style",
-        //         "left:" + (mouse[0] + 15) + "px; top:" + (mouse[1] - 35) + "px"
-        //       )
-        //       .html(function () {
-        //         return `<div> ${d.properties.origin} <strong>Route </strong></div>`;
-        //       });
-        //   });
-        //   d3.select(this).on("mouseout", function (d) {
-        //     tooltip.classed("hidden", true);
-        //     d3.selectAll("path").style("fill", "#fff").style("fill-opacity", 1);
-        //   });
-
-        //   d3.select(this).on("click", function (d) {
-        //     const mouse = d3.mouse(svg.node()).map(function (d) {
-        //       return parseInt(d);
-        //     });
-        //     that.handleDraggablePopOver(
-        //       d.properties,
-        //       mouse[0],
-        //       mouse[1],
-        //       "Route"
-        //     );
-        //   });
-        // }
       });
 
     const group = document.getElementById("group");
@@ -229,10 +102,6 @@ class Map extends Component {
 
       if (d) {
         const length = Object.keys(d.properties).length;
-        // if (length === 11) {
-        //   event.target.style.fill = "#000";
-        //   event.target.style.fillOpacity = "0.1";
-        // }
         tooltip
           .classed("hidden", false)
           .attr(
@@ -245,11 +114,11 @@ class Map extends Component {
           )
           .html(function () {
             if (length === 5) {
-              return `<div>${d.properties.name}  <strong>, School</strong> </div>`;
+              return `<div>${d.properties.name}  <strong>, School</strong> <p class="more-info">CLICK FOR INFORMATION</p> </div>`;
             } else if (length === 4) {
-              return `<div>${d.properties.name}  <strong>, Bus Stop</strong> </div>`;
+              return `<div>${d.properties.name}  <strong>, Bus Stop</strong> <p class="more-info">CLICK FOR INFORMATION</p> </div>`;
             } else if (length === 11) {
-              return `<div>${d.properties.origin}  <strong>, Route</strong> </div>`;
+              return `<div>${d.properties.origin}  <strong>, Route</strong> <p class="more-info">CLICK FOR INFORMATION</p> </div>`;
             }
           });
       }
@@ -332,8 +201,8 @@ class Map extends Component {
     svg.call(
       zoom.transform,
       d3.zoomIdentity
-        .translate(-197905.53913436, 203642.97999083705)
-        .scale(118270.34915599221)
+        .translate(-160123.71400537802, 164991.394746663)
+        .scale(95835.22692675884)
     );
   };
 
@@ -348,6 +217,18 @@ class Map extends Component {
     dragElement.style.left = x + "px";
     dragElement.style.top = y + "px";
     dragTitleElement.innerHTML = title;
+
+    // extracting the user related data from properties
+    const length = Object.keys(properties).length;
+    if (length === 4) {
+      // Removing unnecessary key-value from Bus stop data
+      Object.keys(properties).forEach((key, index) => {
+        if (key !== "name") {
+          delete properties[key];
+        }
+      });
+    }
+
     this.setState({
       showDraggablePopUp: true,
       textDraggablePopUp: properties,
@@ -408,6 +289,7 @@ class Map extends Component {
   };
 
   handleDraggablePopOverClose = () => {
+    // Resetting all the property of selected element on the map before closing the draggable popover
     if (this.state.selectedMapElement) {
       const d = JSON.parse(this.state.selectedMapElement.target.dataset.data);
       const length = Object.keys(d.properties).length;
@@ -427,9 +309,31 @@ class Map extends Component {
       });
     }
 
+    // Closing the draggable popover
     this.setState({
       showDraggablePopUp: false,
     });
+  };
+
+  convertToReadableInfo = (key, value) => {
+    let newValue;
+    if (typeof value === "number") {
+      newValue = value.toFixed(2);
+    }
+    switch (key) {
+      case "distance":
+        newValue = `${newValue} KM.`;
+        break;
+      case "duration":
+        newValue = `${newValue} HR.`;
+        break;
+      case "speed":
+        newValue = `${newValue} KM/HR`;
+        break;
+      default:
+        newValue = `${value}`;
+    }
+    return newValue;
   };
 
   render() {
@@ -441,8 +345,10 @@ class Map extends Component {
         if (typeof textDraggablePopUp[key] !== "object") {
           return (
             <tr key={index} className="quicksand">
-              <td>{key}</td>
-              <td>{textDraggablePopUp[key]}</td>
+              <td className="capitalize">{key.replace("_", " ")}</td>
+              <td>
+                {this.convertToReadableInfo(key, textDraggablePopUp[key])}
+              </td>
             </tr>
           );
         } else {
@@ -479,8 +385,8 @@ class Map extends Component {
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <table className="table table-striped">
-              <tbody>{draggableContainer}</tbody>
+            <table className="table table-striped mb-0">
+              <tbody className="border">{draggableContainer}</tbody>
             </table>
           </div>
         </div>

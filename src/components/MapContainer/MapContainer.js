@@ -29,7 +29,7 @@ class MapContainer extends Component {
 
   componentDidMount() {
     // intializing the mergedGeoJSON with all 4 files data
-    const { bangaloreBoundaries, busStops, routes, schools } = this.props;
+    const { busStops, routes, schools } = this.props;
     const tempMergedGeoJSON = geojsonMerge.merge([
       routes,
       // bangaloreBoundaries,
@@ -43,7 +43,7 @@ class MapContainer extends Component {
 
   handleMapAttrLayout = (mapAttr) => {
     const { showMapAttr } = this.state;
-    const { bangaloreBoundaries, busStops, routes, schools } = this.props;
+    const { busStops, routes, schools } = this.props;
 
     if (mapAttr === "school") {
       let tempShowMapAttr = showMapAttr;
@@ -89,31 +89,48 @@ class MapContainer extends Component {
   };
 
   render() {
-    const { bangaloreBoundaries, busStops, routes, schools } = this.props;
     const { showMapAttr, mergedGeoJSON } = this.state;
     return (
-      <div>
-        <div className="d-flex justify-content-end map-data-checkbox-container">
-          <Form.Check
-            checked={showMapAttr[0].show}
-            type="checkbox"
-            label="Show Schools"
-            onChange={() => this.handleMapAttrLayout("school")}
-          />
-          <Form.Check
-            checked={showMapAttr[1].show}
-            type="checkbox"
-            label="Show Bus Stops"
-            onChange={() => this.handleMapAttrLayout("busstop")}
-          />
-          <Form.Check
-            checked={showMapAttr[2].show}
-            type="checkbox"
-            label="Show Routes"
-            onChange={() => this.handleMapAttrLayout("route")}
-          />
+      <div className="map-container">
+        <p className="exo m-auto mt-3 text-center sub-text">
+          The below map is visual representation of schools and bus stops along
+          with the bus routes of the Banglore. The below map analyse the
+          connectivity of schools with the bus routes and bus stops across
+          Bangalore.
+        </p>
+        <div className="map-card mt-5">
+          <div className="map-header">
+            <div className="d-flex map-data-checkbox-container align-items-center">
+              <p className="exo mr-auto mb-0">
+                The <span className="dot yellow"></span> <strong>Yellow</strong>{" "}
+                dot represents <strong>bus stops</strong> and{" "}
+                <span className="dot violet"></span> <strong>Violet</strong> dot
+                represents <strong>schools</strong> on the map
+              </p>
+              <div className="d-flex map-checkbox-options">
+                <Form.Check
+                  checked={showMapAttr[0].show}
+                  type="checkbox"
+                  label="Schools"
+                  onChange={() => this.handleMapAttrLayout("school")}
+                />
+                <Form.Check
+                  checked={showMapAttr[1].show}
+                  type="checkbox"
+                  label="Bus Stops"
+                  onChange={() => this.handleMapAttrLayout("busstop")}
+                />
+                <Form.Check
+                  checked={showMapAttr[2].show}
+                  type="checkbox"
+                  label="Bus Routes"
+                  onChange={() => this.handleMapAttrLayout("route")}
+                />
+              </div>
+            </div>
+          </div>
+          {mergedGeoJSON && <Map mergedGeoJSON={mergedGeoJSON} />}
         </div>
-        {mergedGeoJSON && <Map mergedGeoJSON={mergedGeoJSON} />}
       </div>
     );
   }
