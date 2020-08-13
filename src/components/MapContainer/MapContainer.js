@@ -93,8 +93,8 @@ class MapContainer extends Component {
     return (
       <div className="map-container">
         <p className="exo m-auto mt-3 text-center sub-text">
-          The below map is visual representation of schools and bus stops along
-          with the bus routes of the Banglore. The below map analyse the
+          The map is visual representation of schools and bus stops along with
+          the bus routes of the Banglore city. It helps citizens to analyse the
           connectivity of schools with the bus routes and bus stops across
           Bangalore.
         </p>

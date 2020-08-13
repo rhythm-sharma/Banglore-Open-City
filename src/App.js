@@ -7,7 +7,6 @@ import Children from "./assets/children.jpg";
 
 import "./App.scss";
 
-import bangaloreBoundaries from "./utils/bangalore_boundaries_2.geo.json";
 import busStops from "./utils/bus_stops.geo.json";
 import routes from "./utils/routes.json";
 import schools from "./utils/schools.json";
@@ -19,8 +18,7 @@ class App extends Component {
         <header>
           <nav className="navbar">
             <a className="navbar-brand" href="#">
-              <span className="heading">Open City | </span>
-              <span className="sub-text">for every child</span>
+              <span className="heading">Open City</span>
             </a>
           </nav>
         </header>
@@ -53,8 +51,9 @@ class App extends Component {
               into local governance and enabling data-driven decision making.
               The data visualized through the online platform will help identify
               where the gaps and information needs are, serve as evidence when
-              advocating for connectivity and help government to optimize their
-              connectivity between education organizations and transport system.
+              advocating for connectivity and help citizens to analyze the
+              connectivity between education organizations and the transport
+              system.
             </p>
           </section>
 
