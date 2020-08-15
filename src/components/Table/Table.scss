@@ -57,3 +57,11 @@
 .dataTables_info {
   font-weight: 500 !important;
 }
+
+.table-select-border {
+  border: 3px solid black !important;
+}
+
+.table-select-not-found-border {
+  border: 3px solid red !important;
+}

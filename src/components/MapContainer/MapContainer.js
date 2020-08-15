@@ -90,6 +90,7 @@ class MapContainer extends Component {
 
   render() {
     const { showMapAttr, mergedGeoJSON } = this.state;
+    const { routes } = this.props;
     return (
       <div className="map-container">
         <p className="exo m-auto mt-3 text-center sub-text">
@@ -129,7 +130,15 @@ class MapContainer extends Component {
               </div>
             </div>
           </div>
-          {mergedGeoJSON && <Map mergedGeoJSON={mergedGeoJSON} />}
+          {mergedGeoJSON && (
+            <Map
+              mergedGeoJSON={mergedGeoJSON}
+              busNumber={this.props.busNumber}
+              routes={routes}
+              busNumberMatchRoute={this.props.busNumberMatchRoute}
+              handleBusNumberMatchRoute={this.props.handleBusNumberMatchRoute}
+            />
+          )}
         </div>
       </div>
     );

@@ -12,7 +12,28 @@ import routes from "./utils/routes.json";
 import schools from "./utils/schools.json";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      busNumber: "",
+      busNumberMatchRoute: null,
+    };
+  }
+
+  handleBusNumber = (busNumber) => {
+    this.setState({
+      busNumber: busNumber,
+    });
+  };
+
+  handleBusNumberMatchRoute = (busNumberMatchRoute) => {
+    this.setState({
+      busNumberMatchRoute: busNumberMatchRoute,
+    });
+  };
+
   render() {
+    const { busNumber, busNumberMatchRoute } = this.state;
     return (
       <div className="main-container">
         <header>
@@ -71,6 +92,9 @@ class App extends Component {
                 busStops={busStops}
                 routes={routes}
                 schools={schools}
+                busNumber={busNumber}
+                busNumberMatchRoute={busNumberMatchRoute}
+                handleBusNumberMatchRoute={this.handleBusNumberMatchRoute}
               />
             </div>
           </section>
@@ -79,7 +103,10 @@ class App extends Component {
             <h2 className="text-center exo">Bangalore Schools List</h2>
             <hr className="end-line" />
             <div className="list-container mt-5">
-              <DataTable />
+              <DataTable
+                handleBusNumber={this.handleBusNumber}
+                busNumberMatchRoute={busNumberMatchRoute}
+              />
             </div>
           </section>
         </div>

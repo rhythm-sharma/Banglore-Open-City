@@ -12,6 +12,7 @@ class Map extends Component {
       positionDraggablePopUp: { x: 0, y: 0 },
       positionTooltip: { x: 0, y: 0 },
       selectedMapElement: null,
+      selectedRouteFromBusNumber: null,
     };
     this.mapWrapper = React.createRef();
     this.tooltip = React.createRef();
@@ -28,6 +29,9 @@ class Map extends Component {
     if (prevProps.mergedGeoJSON !== this.props.mergedGeoJSON) {
       this.removeMap();
       this.createMap();
+    }
+    if (prevProps.busNumber !== this.props.busNumber) {
+      this.highLightRouteFromBusNumber();
     }
   }
 
@@ -186,6 +190,12 @@ class Map extends Component {
           that.state.positionTooltip.y,
           name
         );
+
+        if (that.state.selectedRouteFromBusNumber) {
+          that.state.selectedRouteFromBusNumber._groups[0][0].classList.remove(
+            "highlight-route-red"
+          );
+        }
       }
     });
 
@@ -334,6 +344,37 @@ class Map extends Component {
         newValue = `${value}`;
     }
     return newValue;
+  };
+
+  highLightRouteFromBusNumber = () => {
+    const { busNumber } = this.props;
+    const that = this;
+    let tempBusNumberMatchRoute = false;
+
+    d3.selectAll("path").each(function (d) {
+      if (
+        d.properties.route &&
+        busNumber.replace(/ /g, "").split(",").includes(d.properties.route)
+      ) {
+        tempBusNumberMatchRoute = true;
+
+        let tempSelectedRouteFromBusNumber =
+          that.state.selectedRouteFromBusNumber;
+        if (tempSelectedRouteFromBusNumber) {
+          tempSelectedRouteFromBusNumber.classed("highlight-route-red", false);
+          that.setState({
+            selectedRouteFromBusNumber: tempSelectedRouteFromBusNumber,
+          });
+        }
+
+        d3.select(this).classed("highlight-route-red", true);
+        that.setState({
+          selectedRouteFromBusNumber: d3.select(this),
+        });
+      }
+    });
+
+    this.props.handleBusNumberMatchRoute(tempBusNumberMatchRoute);
   };
 
   render() {
