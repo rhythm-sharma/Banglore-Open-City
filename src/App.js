@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MapContainer from "./components/MapContainer/MapContainer";
 import Facts from "./components/Facts/Facts";
 import DataTable from "./components/Table/Table";
+import RouteTable from "./components/RouteTable/RouteTable"
 
 import Children from "./assets/children.jpg";
 
@@ -108,6 +109,14 @@ class App extends Component {
                 busNumberMatchRoute={busNumberMatchRoute}
               />
             </div>
+          </section>
+
+          <section className="route-table">
+          <h2 className="text-center exo">Routes Table</h2>
+          <hr className="end-line" />
+          <div className="route-table-container">
+            <RouteTable />
+          </div>
           </section>
         </div>
       </div>
